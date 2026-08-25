@@ -1,0 +1,58 @@
+databases:
+  - name: codereview-db
+    databaseName: codereview_db
+    user: codereview_user
+    plan: free
+
+services:
+  # Backend Web Service (Spring Boot via Docker)
+  - type: web
+    name: codereview-backend
+    runtime: docker
+    rootDir: backend
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: postgres
+      - key: SPRING_DATASOURCE_HOST
+        fromDatabase:
+          name: codereview-db
+          property: host
+      - key: SPRING_DATASOURCE_PORT
+        fromDatabase:
+          name: codereview-db
+          property: port
+      - key: SPRING_DATASOURCE_DB
+        fromDatabase:
+          name: codereview-db
+          property: database
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: codereview-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: codereview-db
+          property: password
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+
+  # Frontend Static Site (React / Vite)
+  - type: web
+    name: codereview-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: codereview-backend
+          property: host

@@ -1,0 +1,31 @@
+# Java / Maven
+maven/
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+**/.flattened-pom.xml
+
+# Node / React
+**/node_modules/
+**/dist/
+**/dist-ssr/
+*.local
+.npm
+
+# IDE / Editor
+**/.idea/
+**/.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+Thumbs.db
+
+# Logs & Environment
+*.log
+**/.env
+**/.env.*
+!.env.example
+
+# Temporary / OS
+scratch/
+.system_generated/
