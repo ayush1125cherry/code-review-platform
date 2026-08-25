@@ -1,6 +1,6 @@
 # AI-Powered GitHub Code Review Chatbot
 
-> **"ChatGPT for reviewing GitHub repositories"** — A full-stack AI Code Review application built with **Java, Spring Boot, Google Gemini API, PostgreSQL + pgvector, GitHub OAuth / API, and React**.
+> **"Ai for reviewing GitHub repositories"** — A full-stack AI Code Review application built with **Java, Spring Boot, Google Gemini API, PostgreSQL + pgvector, GitHub OAuth / API, and React**.
 
 ---
 
@@ -82,7 +82,6 @@ $env:SPRING_DATASOURCE_PASSWORD="postgrespassword"
 $env:GITHUB_CLIENT_ID="your_client_id"
 $env:GITHUB_CLIENT_SECRET="your_client_secret"
 ```
-*(Note: You can also configure your Gemini API Key directly in the UI Settings / Profile page!)*
 
 ### 3. Run Backend (Spring Boot)
 ```bash
