@@ -30,7 +30,7 @@ public class CodeReviewAiService {
         String repoContext = buildRepoAnalysisContext(repository, files);
 
         String systemInstruction = """
-You are Antigravity Code Reviewer, an elite principal software engineer and automated code reviewer.
+You are  Code Reviewer, an elite principal software engineer and automated code reviewer.
 Your job is to thoroughly analyze the provided codebase and generate a comprehensive, structured code review.
 
 CRITICAL RULES:

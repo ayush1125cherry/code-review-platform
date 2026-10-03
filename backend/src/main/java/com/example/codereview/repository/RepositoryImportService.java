@@ -44,7 +44,6 @@ public class RepositoryImportService {
     private final GitHubClient gitHubClient;
     private final ReviewAnalysisService reviewAnalysisService;
 
-    @Transactional
     public RepositorySummaryDto importAndReview(Long userId, ImportRepoRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found: " + userId));
@@ -103,7 +102,7 @@ public class RepositoryImportService {
         repo.setStatusProgress(5);
         repo.setErrorMessage(null);
 
-        RepositoryEntity savedRepo = repositoryEntityRepository.save(repo);
+        RepositoryEntity savedRepo = repositoryEntityRepository.saveAndFlush(repo);
 
         // Trigger asynchronous import and review
         String customApiKey = request.getCustomApiKey() != null && !request.getCustomApiKey().isBlank()

@@ -50,8 +50,8 @@ app:
     base-url: https://generativelanguage.googleapis.com/v1beta
   limits:
     max-files-per-repo: 250
-    max-file-size-bytes: 250000 # 250 KB
-    max-repo-size-bytes: 20000000 # 20 MB
+    max-file-size-bytes: 250000 #
+    max-repo-size-bytes: 20000000
 
 ---
 spring:

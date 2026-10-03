@@ -50,7 +50,20 @@ public class ReviewAnalysisService {
     @Async("repoTaskExecutor")
     public void startAsyncRepositoryReview(Long repositoryId, Long userId, String customApiKey) {
         log.info("Starting background import and review analysis for repo id: {}", repositoryId);
-        RepositoryEntity repo = repositoryEntityRepository.findById(repositoryId).orElse(null);
+        
+        RepositoryEntity repo = null;
+        for (int i = 0; i < 5; i++) {
+            repo = repositoryEntityRepository.findById(repositoryId).orElse(null);
+            if (repo != null) {
+                break;
+            }
+            try {
+                Thread.sleep(150);
+            } catch (InterruptedException ignored) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
         if (repo == null) {
             log.error("Repository not found for id: {}", repositoryId);
             return;
