@@ -1,9 +1,3 @@
-databases:
-  - name: codereview-db
-    databaseName: codereview_db
-    user: codereview_user
-    plan: free
-
 services:
   # Backend Web Service (Spring Boot via Docker)
   - type: web
@@ -14,26 +8,12 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: postgres
-      - key: SPRING_DATASOURCE_HOST
-        fromDatabase:
-          name: codereview-db
-          property: host
-      - key: SPRING_DATASOURCE_PORT
-        fromDatabase:
-          name: codereview-db
-          property: port
-      - key: SPRING_DATASOURCE_DB
-        fromDatabase:
-          name: codereview-db
-          property: database
+      - key: SPRING_DATASOURCE_URL
+        sync: false
       - key: SPRING_DATASOURCE_USERNAME
-        fromDatabase:
-          name: codereview-db
-          property: user
+        sync: false
       - key: SPRING_DATASOURCE_PASSWORD
-        fromDatabase:
-          name: codereview-db
-          property: password
+        sync: false
       - key: GEMINI_API_KEY
         sync: false
       - key: JWT_SECRET
