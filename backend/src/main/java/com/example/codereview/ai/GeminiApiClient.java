@@ -49,10 +49,10 @@ public class GeminiApiClient {
         List<String> candidateModels = List.of(
                 defaultModel,
                 "gemini-2.0-flash",
-                "gemini-1.5-flash-latest",
+                "gemini-2.0-flash-lite",
                 "gemini-1.5-flash",
-                "gemini-1.5-pro",
-                "gemini-2.5-flash"
+                "gemini-1.5-flash-8b",
+                "gemini-1.5-pro"
         );
 
         Exception lastException = null;
@@ -107,13 +107,26 @@ public class GeminiApiClient {
             } catch (WebClientResponseException e) {
                 log.warn("Gemini model {} returned status {}: {}", model, e.getStatusCode(), e.getResponseBodyAsString());
                 lastException = e;
-                if (e.getStatusCode() == HttpStatus.NOT_FOUND || e.getResponseBodyAsString().contains("not found")) {
-                    // Try next model candidate
+                int statusCode = e.getStatusCode().value();
+                String body = e.getResponseBodyAsString();
+
+                // If not found (404), overloaded/high demand (503), rate-limited (429), or server error (500/502/504), fallback to next candidate model
+                if (statusCode == 404 || statusCode == 503 || statusCode == 429 || statusCode >= 500
+                        || body.contains("not found")
+                        || body.contains("high demand")
+                        || body.contains("UNAVAILABLE")
+                        || body.contains("RESOURCE_EXHAUSTED")) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException ignored) {
+                        Thread.currentThread().interrupt();
+                    }
                     continue;
                 }
+
                 String errorMsg = "Gemini API error: " + e.getStatusCode();
                 try {
-                    JsonNode errJson = objectMapper.readTree(e.getResponseBodyAsString());
+                    JsonNode errJson = objectMapper.readTree(body);
                     if (errJson.has("error") && errJson.get("error").has("message")) {
                         errorMsg = errJson.get("error").get("message").asText();
                     }
