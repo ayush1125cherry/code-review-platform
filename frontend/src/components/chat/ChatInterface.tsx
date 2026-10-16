@@ -1,9 +1,8 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Message } from '../../types/chat';
 import { CodeReference } from '../../types/review';
 import { chatService } from '../../services/chatService';
 import { MessageItem } from './MessageItem';
-import { SuggestedPrompts } from './SuggestedPrompts';
 import { LoadingSpinner } from '../common/LoadingSpinner';
 import { Send, MessageSquare, Sparkles } from 'lucide-react';
 
@@ -151,13 +150,6 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           </>
         )}
       </div>
-
-      {/* Suggested Prompts (when message history is short) */}
-      {messages.length <= 2 && (
-        <div className="px-6 py-2 border-t border-slate-100 bg-white">
-          <SuggestedPrompts onSelectPrompt={(p) => handleSend(p)} efficiencyScore={efficiencyScore} />
-        </div>
-      )}
 
       {/* Input Area */}
       <div className="p-4 border-t border-slate-100 bg-white">

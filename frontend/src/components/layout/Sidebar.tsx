@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useUI } from '../../context/UIContext';
@@ -6,7 +6,6 @@ import { Logo } from '../common/Logo';
 import {
   LayoutDashboard,
   GitBranch,
-  FileCheck2,
   User as UserIcon,
   LogOut,
   Github,
@@ -21,7 +20,6 @@ export const Sidebar: React.FC = () => {
   const navItems = [
     { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { label: 'Repositories', path: '/repositories', icon: GitBranch },
-    { label: 'Reviews', path: '/reviews', icon: FileCheck2 },
     { label: 'Profile', path: '/profile', icon: UserIcon },
   ];
 

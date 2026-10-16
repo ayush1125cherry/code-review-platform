@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { UIProvider } from './context/UIContext';
@@ -25,7 +25,7 @@ export const App: React.FC = () => {
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/repositories" element={<RepositoriesPage />} />
-              <Route path="/reviews" element={<DashboardPage />} />
+              <Route path="/reviews" element={<Navigate to="/dashboard" replace />} />
               <Route path="/reviews/:id" element={<ReviewPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
